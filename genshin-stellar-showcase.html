@@ -1,0 +1,2802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原神·千星奇域 服装展示</title>
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --gold: #f4d03f;
+            --purple: #9b59b6;
+            --silver: #bdc3c7;
+            --bronze: #cd6133;
+            --text: #ecf0f1;
+            --text-muted: #95a5a6;
+            --card-bg: #0f0f23;
+            --card-border: rgba(233, 69, 96, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background: linear-gradient(rgba(10,10,26,0.7), rgba(10,10,26,0.85)), url('images/header-bg.png') center/cover no-repeat fixed;
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 20px 20px;
+            background: linear-gradient(rgba(10,10,26,0.5), rgba(10,10,26,0.7)), url('images/header-bg.png') center/cover no-repeat;
+            position: relative;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bg-cover {
+            background: var(--primary);
+            position: relative;
+            z-index: 1;
+            padding-top: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(244, 208, 63, 0.3);
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1em;
+        }
+
+        /* Search Section */
+        .search-section {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            border: 2px solid rgba(233, 69, 96, 0.4);
+            border-radius: 12px;
+            background: rgba(15, 15, 35, 0.8);
+            color: var(--text);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .filter-select {
+            padding: 15px 20px;
+            border: 2px solid rgba(233, 69, 96, 0.4);
+            border-radius: 12px;
+            background: rgba(15, 15, 35, 0.8);
+            color: var(--text);
+            font-size: 16px;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        .filter-select option {
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9em;
+        }
+
+        /* Group Section */
+        .group-section {
+            margin-bottom: 40px;
+        }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px 25px;
+            background: linear-gradient(90deg, rgba(233, 69, 96, 0.15) 0%, transparent 100%);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .group-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--gold) 0%, #fff 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .group-count {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* Outfit Grid - Single flat grid */
+        .outfit-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Version Row */
+        .version-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .version-row .outfit-card {
+            flex: 0 0 calc(25% - 15px);
+            max-width: calc(25% - 15px);
+        }
+
+        @media (max-width: 1200px) {
+            .version-row .outfit-card { flex: 0 0 calc(33.333% - 14px); max-width: calc(33.333% - 14px); }
+        }
+        @media (max-width: 900px) {
+            .version-row .outfit-card { flex: 0 0 calc(50% - 10px); max-width: calc(50% - 10px); }
+        }
+        @media (max-width: 600px) {
+            .version-row { flex-direction: column; }
+            .version-row .outfit-card { flex: 0 0 100%; max-width: 100%; }
+        }
+
+        /* Card */
+        .outfit-card {
+            background: linear-gradient(145deg, var(--card-bg) 0%, rgba(22, 33, 62, 0.5) 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .outfit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.2);
+            border-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .card-image {
+            aspect-ratio: 3 / 4;
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.2) 0%, rgba(155, 89, 182, 0.2) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .outfit-card.has-image2 .card-images {
+            display: flex;
+            gap: 2px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .outfit-card.has-image2 .card-images img {
+            flex: 1;
+            width: 50%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .version-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            background: rgba(0, 0, 0, 0.6);
+            color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+        }
+
+        .rarity-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .rarity-legendary {
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.5);
+        }
+
+        .rarity-outstanding {
+            background: linear-gradient(135deg, var(--purple), #8e44ad);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.5);
+        }
+
+        .rarity-superior {
+            background: linear-gradient(135deg, var(--gold), #f1c40f);
+            color: #1a1a2e;
+            box-shadow: 0 0 15px rgba(244, 208, 63, 0.5);
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.4em;
+            margin-bottom: 8px;
+            color: #fff;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-rarity {
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            padding-left: 4px;
+        }
+
+        .card-rarity .stars {
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 4px rgba(255, 255, 255, 0.5);
+        }
+
+        .rarity-legendary.card-rarity { color: rgba(255, 200, 150, 0.95); }
+        .rarity-outstanding.card-rarity { color: rgba(200, 180, 255, 0.95); }
+        .rarity-superior.card-rarity { color: rgba(255, 230, 150, 0.95); }
+
+        .card-desc {
+            font-size: 0.95em;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: calc(1.6em * 3);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 15px 0 0 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+        }
+
+        .price {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .price.free {
+            color: #2ecc71;
+        }
+
+        .obtain-method {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 10px;
+            border-radius: 6px;
+            margin-left: auto;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .no-results h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            border-top: 1px solid rgba(233, 69, 96, 0.2);
+            margin-top: 40px;
+        }
+
+        /* Highlight Animation */
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(244, 208, 63, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(244, 208, 63, 0.6); }
+        }
+
+        .match-highlight {
+            animation: glow 1s ease-in-out;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, var(--card-bg) 0%, rgba(22, 33, 62, 0.8) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+            animation: modalIn 0.3s ease;
+            display: flex;
+        }
+
+        /* 3列Modal布局 */
+        .modal-3col {
+            display: flex;
+            width: 100%;
+            max-height: 85vh;
+        }
+        .modal-col-left {
+            flex: 0 0 38%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-right: 1px solid rgba(233, 69, 96, 0.2);
+        }
+        .modal-col-center {
+            flex: 1;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px 20px;
+        }
+        .modal-col-right {
+            flex: 0 0 32%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-left: 1px solid rgba(233, 69, 96, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(233, 69, 96, 0.3);
+            color: var(--text);
+            font-size: 1.5em;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .modal-col-left .modal-image {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+
+        .modal-col-left .modal-image:hover .modal-zoom-hint {
+            opacity: 1;
+        }
+
+        .modal-col-left .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .modal-image-placeholder {
+            font-size: 6em;
+            color: rgba(244, 208, 63, 0.4);
+        }
+
+        .modal-zoom-hint {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 12px;
+            border-radius: 15px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .modal-rarity-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .modal-version-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            background: rgba(0, 0, 0, 0.5);
+            color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+        }
+
+        /* 中间列 - 信息区 */
+        .modal-col-center .modal-title {
+            font-size: 1.4em;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .modal-col-center .modal-stars {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .modal-col-center .modal-section {
+            margin-bottom: 14px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .modal-col-center .modal-section-title {
+            font-size: 0.8em;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .modal-col-center .modal-section-content {
+            font-size: 0.9em;
+            color: var(--text);
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .modal-col-center .modal-price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(244, 208, 63, 0.1) 0%, rgba(233, 69, 96, 0.1) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(244, 208, 63, 0.3);
+        }
+
+        .modal-col-center .modal-price-label {
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+
+        .modal-col-center .modal-price-value {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .modal-col-center .modal-price-value.free {
+            color: #2ecc71;
+        }
+
+        .modal-obtain-box {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .modal-obtain-item {
+            flex: 1;
+            padding: 15px;
+            background: rgba(155, 89, 182, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-obtain-label {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .modal-obtain-value {
+            font-size: 1em;
+            color: var(--text);
+        }
+
+        /* 右侧评论区 */
+        .comment-section {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .comment-header {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .comment-header::before {
+            content: '💬';
+        }
+        .comment-input-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .comment-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid rgba(233, 69, 96, 0.4);
+            border-radius: 8px;
+            background: rgba(15, 15, 35, 0.6);
+            color: var(--text);
+            font-size: 0.9em;
+            resize: none;
+            min-height: 60px;
+            font-family: inherit;
+        }
+        .comment-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .comment-input::placeholder {
+            color: var(--text-muted);
+        }
+        .comment-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .comment-upload-btn {
+            padding: 8px 14px;
+            border: 1px solid rgba(233, 69, 96, 0.4);
+            border-radius: 8px;
+            background: rgba(15, 15, 35, 0.6);
+            color: var(--text-muted);
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .comment-upload-btn:hover {
+            border-color: var(--accent);
+            color: var(--text);
+            background: rgba(233, 69, 96, 0.1);
+        }
+        .comment-upload-btn img {
+            width: 14px;
+            height: 14px;
+        }
+        .comment-submit-btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent), #c0392b);
+            color: #fff;
+            font-size: 0.9em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .comment-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+        }
+        .comment-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .comment-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 12px;
+        }
+        .comment-user {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .comment-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75em;
+            color: #fff;
+            font-weight: bold;
+        }
+        .comment-nickname {
+            font-size: 0.85em;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .comment-time {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+        .comment-delete-btn {
+            margin-left: 8px;
+            width: 20px;
+            height: 20px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(233, 69, 96, 0.3);
+            color: var(--text-muted);
+            font-size: 0.7em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            opacity: 0;
+        }
+        .comment-item:hover .comment-delete-btn {
+            opacity: 1;
+        }
+        .comment-delete-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .comment-text {
+            font-size: 0.9em;
+            color: var(--text);
+            line-height: 1.5;
+            word-break: break-word;
+        }
+        .comment-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .comment-images img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .comment-images img:hover {
+            transform: scale(1.05);
+        }
+        .comment-empty {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            padding: 20px 0;
+        }
+
+        /* Preview image in comment input */
+        .comment-preview-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .comment-preview-item {
+            position: relative;
+        }
+        .comment-preview-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .comment-preview-images .remove-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.7em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .comment-preview-item {
+            position: relative;
+        }
+
+        .header .user-id-badge {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(233,69,96,0.25);
+            border: 1px solid rgba(233,69,96,0.4);
+            color: var(--gold);
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        /* 注册弹窗 */
+        .welcome-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 3000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .welcome-box {
+            background: linear-gradient(145deg, var(--card-bg), rgba(22,33,62,0.9));
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .welcome-title {
+            font-size: 1.8em;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .welcome-sub {
+            font-size: 0.95em;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+        .welcome-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(233,69,96,0.4);
+            border-radius: 12px;
+            background: rgba(15,15,35,0.8);
+            color: var(--text);
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .welcome-input:focus { outline: none; border-color: var(--accent); }
+        .welcome-error {
+            color: #e74c3c;
+            font-size: 0.8em;
+            margin-bottom: 15px;
+            min-height: 1.2em;
+        }
+        .welcome-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #c0392b);
+            color: #fff;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .welcome-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233,69,96,0.4);
+        }
+
+        /* Version Tabs */
+        .version-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            flex-wrap: wrap;
+            margin: 5px auto 0;
+            max-width: 800px;
+        }
+
+        .version-tab {
+            padding: 8px 16px;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            border-radius: 20px;
+            background: rgba(15, 15, 35, 0.6);
+            color: var(--text-muted);
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .version-tab:hover {
+            border-color: var(--accent);
+            color: var(--text);
+            background: rgba(233, 69, 96, 0.1);
+        }
+
+        .version-tab.active {
+            border-color: var(--accent);
+            background: rgba(233, 69, 96, 0.2);
+            color: var(--gold);
+            font-weight: bold;
+            box-shadow: 0 0 12px rgba(233, 69, 96, 0.25);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+        .stats-bar {
+            gap: 15px;
+        }
+
+            .outfit-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                max-height: 95vh;
+            }
+
+            .modal-title {
+                font-size: 1.5em;
+            }
+
+            /* 移动端单列布局 */
+            .modal-3col {
+                flex-direction: column;
+                max-height: 85vh;
+            }
+            .modal-col-left {
+                flex: 0 0 auto;
+                max-height: 35vh;
+                border-right: none;
+                border-bottom: 1px solid rgba(233, 69, 96, 0.2);
+            }
+            .modal-col-left .modal-image {
+                min-height: 200px;
+                aspect-ratio: 16 / 9;
+            }
+            .modal-col-center {
+                flex: 1;
+                max-height: none;
+                overflow-y: visible;
+            }
+            .modal-col-right {
+                flex: 0 0 auto;
+                max-height: 35vh;
+                border-left: none;
+                border-top: 1px solid rgba(233, 69, 96, 0.2);
+            }
+            .comment-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 注册弹窗 -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-box">
+            <div class="welcome-title">✧ 欢迎来到千星衣柜 ✧</div>
+            <div class="welcome-sub">请输入你的名字，以便记录评论</div>
+            <input type="text" class="welcome-input" id="welcomeInput" placeholder="输入名字..." maxlength="20" autocomplete="off">
+            <div class="welcome-error" id="welcomeError"></div>
+            <button class="welcome-btn" id="welcomeBtn">原神启动</button>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="user-id-badge" id="userIdBadge"></div>
+        <h1>✧ 千星衣柜 ✧</h1>
+    </header>
+
+    <div class="bg-cover">
+    <section class="search-section">
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="输入关键词搜索服装...">
+            <select id="rarityFilter" class="filter-select">
+                <option value="all">全部稀有度</option>
+                <option value="legendary">传说</option>
+                <option value="outstanding">卓越</option>
+                <option value="superior">优异</option>
+            </select>
+            <select id="priceFilter" class="filter-select">
+                <option value="all">全部价格</option>
+                <option value="free">免费获取</option>
+                <option value="pass">通行证获取</option>
+                <option value="selfpick">活动自选</option>
+                <option value="paid">千星商城</option>
+            </select>
+        </div>
+    </section>
+
+    <section class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-value" id="totalCount">0</div>
+            <div class="stat-label">总服装数</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="freeCount">0</div>
+            <div class="stat-label">免费送</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="passCount">0</div>
+            <div class="stat-label">通行证获取</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="selfpickCount">0</div>
+            <div class="stat-label">活动自选</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="paidCount">0</div>
+            <div class="stat-label">千星商城</div>
+        </div>
+    </section>
+
+    <div class="version-tabs" id="versionTabs">
+        <button class="version-tab active" data-version="月之七">月之七</button>
+        <button class="version-tab" data-version="月之六">月之六</button>
+        <button class="version-tab" data-version="月之五">月之五</button>
+        <button class="version-tab" data-version="月之四">月之四</button>
+        <button class="version-tab" data-version="月之三">月之三</button>
+        <button class="version-tab" data-version="月之二">月之二</button>
+        <button class="version-tab" data-version="all">全部</button>
+    </div>
+
+    <main class="outfit-grid" id="outfitGrid">
+        <!-- Cards will be injected here -->
+    </main>
+
+    <footer class="footer">
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content" id="modalContent">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-3col">
+                <!-- 左列：图片 -->
+                <div class="modal-col-left">
+                    <div class="modal-image" id="modalImage" onclick="if(this.querySelector('img').style.display !== 'none') openFullSizeImage(document.getElementById('modalImg').src, document.getElementById('modalTitle').textContent)">
+                        <span class="modal-rarity-badge" id="modalRarityBadge"></span>
+                        <span class="modal-version-badge" id="modalVersionBadge"></span>
+                        <img id="modalImg" src="" alt="" style="display: none;">
+                        <span class="modal-image-placeholder" id="modalPlaceholder">✧</span>
+                        <span class="modal-zoom-hint" id="modalZoomHint">点击查看大图</span>
+                    </div>
+                </div>
+                <!-- 中列：描述、获取方式、价格 -->
+                <div class="modal-col-center">
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <div class="modal-stars" id="modalStars"></div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">描述</div>
+                        <div class="modal-section-content" id="modalDesc"></div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">获取方式</div>
+                        <div class="modal-section-content" id="modalObtainDetail"></div>
+                    </div>
+
+                    <div class="modal-price-box">
+                        <div>
+                            <div class="modal-price-label">价格</div>
+                            <div class="modal-price-value" id="modalPrice"></div>
+                        </div>
+                        <div id="modalObtainMethod"></div>
+                    </div>
+                </div>
+                <!-- 右列：评论区 -->
+                <div class="modal-col-right">
+                    <div class="comment-section">
+                        <div class="comment-header">评论</div>
+                        <div class="comment-input-row">
+                            <textarea class="comment-input" id="commentInput" placeholder="写下你的评论..."></textarea>
+                        </div>
+                        <div class="comment-preview-images" id="commentPreviewImages"></div>
+                        <div class="comment-actions">
+                            <label class="comment-upload-btn" id="commentUploadLabel">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%2395a5a6' viewBox='0 0 16 16'%3E%3Cpath d='M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z'/%3E%3Cpath d='M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z'/%3E%3C/svg%3E" alt="upload">
+                                图片
+                                <input type="file" id="commentImageInput" accept="image/*" multiple style="display:none;">
+                            </label>
+                            <button class="comment-submit-btn" id="commentSubmitBtn">发送</button>
+                        </div>
+                        <div class="comment-list" id="commentList">
+                            <div class="comment-empty">暂无评论，来抢沙发吧~</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Outfit Data - Complete from Genshin Wiki (2026-05)
+        const outfits = [
+            // ===== 月之七 (Month 7) =====
+            // ★★★★★ 传说
+            {
+                id: 601,
+                name: '绚缦蝶迹',
+                nameAlt: '绚缦蝶迹 / 绚缦蝶迹',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '在严谨肃穆与华美翩然之间，以高雅的黛紫晕染出绝妙的平衡线，穿着者轻灵的每一步，都将平稳踏在和谐的准则上，为自然与人文的无隙相融起舞。',
+                descLabel女: '在严谨肃穆与华美翩然之间，以高雅的黛紫晕染出绝妙的平衡线，穿着者轻灵的每一步，都将平稳踏在和谐的准则上，为自然与人文的无隙相融起舞。',
+                descLabel男: '在严谨肃穆与华美翩然之间，以高雅的黛紫晕染出绝妙的平衡线，穿着者轻灵的每一步，都将平稳踏在和谐的准则上，为自然与人文的无隙相融起舞。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '斑彩蝶迹·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「斑彩蝶迹」活动颂愿限时获取相应传说（5星）装扮。',
+                keywords: ['绚缦', '蝶迹', '蝴蝶', '黛紫', '花语'],
+                version: '月之七',
+                image: 'images/0e0f379e4fec975873c61322d966d0473546889200863460.jpg',
+                image2: 'images/589ff2f1a8e051ec2c9f77f60a5143a43546889200863460.jpg'
+            },
+            {
+                id: 602,
+                name: '绚缦蝶迹·靛蓝烟氛',
+                nameAlt: '绚缦蝶迹·靛蓝烟氛 / 绚缦蝶迹·靛蓝烟氛',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '升炼后的绚缦蝶迹套装。在轻烟般弥漫的靛蓝中，乘着花语的曲调，与自然的意志融为一体，延续着生命之歌的永恒旋律。',
+                descLabel女: '升炼后的绚缦蝶迹套装。在轻烟般弥漫的靛蓝中，乘着花语的曲调，与自然的意志融为一体，延续着生命之歌的永恒旋律。',
+                descLabel男: '升炼后的绚缦蝶迹套装。在轻烟般弥漫的靛蓝中，乘着花语的曲调，与自然的意志融为一体，延续着生命之歌的永恒旋律。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '斑彩蝶迹·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「斑彩蝶迹」活动颂愿限时获取相应传说（5星）装扮。',
+                keywords: ['绚缦', '蝶迹', '靛蓝', '烟氛', '升炼'],
+                version: '月之七',
+                image: 'images/8c6c0a1d3ebaed8aee603e71e8957ba63546889200863460.jpg',
+                image2: 'images/2342c0875d84a6c914a01179c74411cc3546889200863460.jpg'
+            },
+            // ★★★★ 卓越
+            {
+                id: 603,
+                name: '落樱衔风',
+                nameAlt: '落樱衔风 / 落樱衔风',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '其面料轻薄舒适，呈现出花瓣在风中翻卷的轻灵感，散发着一种随性、干净的春日气息。',
+                descLabel女: '其面料轻薄舒适，呈现出花瓣在风中翻卷的轻灵感，散发着一种随性、干净的春日气息。',
+                descLabel男: '其面料轻薄舒适，呈现出花瓣在风中翻卷的轻灵感，散发着一种随性、干净的春日气息。',
+                price: '通行证获取',
+                isFree: false,
+                obtain: '诸界纪游·诸界史诗',
+                obtainDetail: '活动期间，旅行者可以通过解锁「诸界纪游」或「诸界史诗」获得相应卓越（4星）装扮。',
+                keywords: ['落樱', '衔风', '春日', '花瓣', '樱花'],
+                version: '月之七',
+                image: 'images/4e7293d634443bae5db8d64ceef80ba13546889200863460.jpg',
+                image2: 'images/16fa452860a1a6acf1719e26277ad3db3546889200863460.jpg'
+            },
+            {
+                id: 604,
+                name: '白昼藏踪',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '灵感来源于两位猫猫外观的精灵，以及他们永远的搭档。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应卓越（4星）装扮。',
+                keywords: ['白昼', '藏踪', '猫猫', '精灵', '搭档'],
+                version: '月之七',
+                image: 'images/4e059c5d97e3493d6bf01391473175fd3546889200863460.png'
+            },
+            {
+                id: 605,
+                name: '花语漫听',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '温馨花房里的园丁工作服，面料舒适，色彩如晴照下的花瓣般恬淡。穿着它，仿佛能嗅到微湿的泥土清香与百花初绽的芬芳，让每一次弯腰修剪、每一次提壶浇灌，都充满诗意与轻快。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '斑彩蝶迹·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「斑彩蝶迹」活动颂愿限时获取相应卓越（4星）装扮。',
+                keywords: ['花语', '漫听', '园丁', '花房', '浇灌'],
+                version: '月之七',
+                image: 'images/3929328bf2c66df4ca8d4416dad97bb03546889200863460.png'
+            },
+            {
+                id: 606,
+                name: '重影潜行',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '采用极度干练、利落的剪裁，每一道线条都为了高效潜行与极致的爆发而生。在生死一搏的战场上，穿着者行动时，甚至会产生虚实交错的重叠残影，令敌人无法锁定其真身。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '斑彩蝶迹·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「斑彩蝶迹」活动颂愿限时获取相应卓越（4星）装扮。',
+                keywords: ['重影', '潜行', '残影', '战场', '干练'],
+                version: '月之七',
+                image: 'images/f4685c26bd2e26ce184ab8039df111b33546889200863460.png'
+            },
+            {
+                id: 607,
+                name: '简信余温',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '厚重而舒适的面料恰如古老信纸的触感。领口设计灵感源于信笺的封口，线条利落，却又庄重得体。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '斑彩蝶迹·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「斑彩蝶迹」活动颂愿限时获取相应卓越（4星）装扮。',
+                keywords: ['简信', '余温', '信纸', '信笺', '庄重'],
+                version: '月之七',
+                image: 'images/9994835b0213c1b1f66a5de990810b083546889200863460.png'
+            },
+            {
+                id: 608,
+                name: '墨染新箨',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '蕴含了深林春意的山野常服，墨黑色如破土而出的坚硬笋壳，包裹着内里那抹鲜活的新绿。',
+                price: '常驻颂愿',
+                isFree: false,
+                obtain: '奇遇回声·常驻颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「奇遇回声」常驻颂愿获得相应卓越（4星）装扮。',
+                keywords: ['墨染', '新箨', '春意', '山野', '墨黑'],
+                version: '月之七',
+                image: 'images/d8320bc234e02028cb4487d5b3f750313546889200863460.png'
+            },
+            {
+                id: 609,
+                name: '溅彩画家',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '亮眼的明黄色底色如海边的亮丽阳光，衣身随处可见溅墨痕迹。这些色彩不是杂乱的污渍，而是某种可爱生物喷吐出的艺术笔触。',
+                price: '活动自选',
+                isFree: true,
+                obtain: '绮衣珍赏·汇涌',
+                obtainDetail: '活动期间，旅行者可通过完成「绮衣珍赏·汇涌」活动，逐步解锁自选相应卓越（4星）装扮一套。',
+                keywords: ['溅彩', '画家', '明黄', '溅墨', '艺术'],
+                version: '月之七',
+                image: 'images/8c1a1cb42587b7763a064858aeb0e9e33546889200863460.png'
+            },
+            // ★★★ 优异
+            {
+                id: 610,
+                name: '绿茵逐辉',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '舒适合身的足球竞技服，穿着这套衣装，踏入欢呼声此起彼伏的绿茵场，点燃胸中的激情，向着目标球门，追逐阳光般冲锋！',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应优异（3星）装扮。',
+                keywords: ['绿茵', '逐辉', '足球', '竞技', '运动'],
+                version: '月之七',
+                image: 'images/042d6d6825b706d573f0c3965fb4bf783546889200863460.png'
+            },
+            {
+                id: 611,
+                name: '攀援晨曦',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '灵感源自攀援而生的花朵，衣服上浅紫色与淡蓝色交叠，如浸润晨曦中的薄瓣，让人能感受到它那股在微光中向上攀升的静谧生命力。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应优异（3星）装扮。',
+                keywords: ['攀援', '晨曦', '花朵', '生命力', '静谧'],
+                version: '月之七',
+                image: 'images/07c5c1664f9c5ca33cb7df9befdda1003546889200863460.png'
+            },
+            // ===== 月之六 (Month 6) =====
+            // ★★★★★ 传说
+            {
+                id: 101,
+                name: '鳞锋战记',
+                nameAlt: '鳞锋战记 / 鳞锋战记',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '灵巧与坚韧并重的战衣，结合了大将礼服的庄严形制，和邪龙般极具威慑力的轻甲构型。无论穿梭在烈焰飞溅，魔兽横行的战场之上，还是置身于凯旋典礼的关键席位，这身战衣都能让穿着者从容应对一切状况。',
+                descLabel女: '灵巧与坚韧并重的战衣，结合了大将礼服的庄严形制，和邪龙般极具威慑力的轻甲构型。无论穿梭在烈焰飞溅，魔兽横行的战场之上，还是置身于凯旋典礼的关键席位，这身战衣都能让穿着者从容应对一切状况。',
+                descLabel男: '灵巧与坚韧并重的战衣，结合了大将礼服的庄严形制，和邪龙般极具威慑力的轻甲构型。无论穿梭在烈焰飞溅，魔兽横行的战场之上，还是置身于凯旋典礼的关键席位，这身战衣都能让穿着者从容应对一切状况。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '炽意鳞锋·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「炽意鳞锋」活动颂愿限时获取相应传说（5星）装扮。',
+                keywords: ['鳞锋', '战记', '龙鳞', '战衣', '将军', '炽意'],
+                version: '月之六',
+                image: 'images/bb1e77e52076612a834878690222bf633546889200863460.png',
+                image2: 'images/8524d15f7210944acf22c622ee89b4ea3546889200863460.png'
+            },
+            {
+                id: 109,
+                name: '鳞锋战记·幽焰',
+                nameAlt: '鳞锋战记·幽焰 / 鳞锋战记·幽焰',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '升炼后的鳞锋战记套装。灵巧与坚韧并重的战衣，是两位新晋将领扫除「恶魔之力」，不断炼化威胁后，最终呈现而出的仪容。幽紫的火焰在他们身上，并非邪恶与破坏的象征，而是铲除这二者的炽烈力量。',
+                descLabel女: '升炼后的鳞锋战记套装。灵巧与坚韧并重的战衣，是两位新晋将领扫除「恶魔之力」，不断炼化威胁后，最终呈现而出的仪容。幽紫的火焰在他们身上，并非邪恶与破坏的象征，而是铲除这二者的炽烈力量。',
+                descLabel男: '升炼后的鳞锋战记套装。灵巧与坚韧并重的战衣，是两位新晋将领扫除「恶魔之力」，不断炼化威胁后，最终呈现而出的仪容。幽紫的火焰在他们身上，并非邪恶与破坏的象征，而是铲除这二者的炽烈力量。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '炽意鳞锋·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「炽意鳞锋」活动颂愿限时获取相应传说（5星）装扮。',
+                keywords: ['鳞锋', '战记', '幽焰', '升炼', '恶魔', '炽意'],
+                version: '月之六',
+                image: 'images/a21ab273784b064334cf36342d7807343546889200863460.png',
+                image2: 'images/5b4e6d56145d40b111fa4c745870bf053546889200863460.png'
+            },
+            // ★★★★ 卓越
+            {
+                id: 102,
+                name: '纵逸疾行',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '洒脱不羁的佣兵一反常态，示人以少年少女的潮流形象。宽大的衣袋中可能放着汽水罐，也有可能是排除罪恶的紧凑铳枪。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '炽意鳞锋·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「炽意鳞锋」活动颂愿限时获取相应卓越（4星）装扮。',
+                keywords: ['纵逸', '疾行', '少年', '少女', '佣兵'],
+                version: '月之六',
+                image: 'images/f844b033e1276f088ba531c35cd8cca73546889200863460.png'
+            },
+            {
+                id: 103,
+                name: '开朗玩伴',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '乖巧听话、善解人意且无比忠诚的狗狗，往往能赢得许多人的喜爱。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '炽意鳞锋·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「炽意鳞锋」活动颂愿限时获取相应卓越（4星）装扮。',
+                keywords: ['开朗', '玩伴', '狗狗', '忠诚', '可爱'],
+                version: '月之六',
+                image: 'images/50ab4302b7900f7bd5546f1671fdbfbb3546889200863460.png'
+            },
+            {
+                id: 104,
+                name: '纷竞炽心',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '运动场上，热血与激情不可或缺，赛手与观众互相鼓励，才能成就绝妙的竞技篇章。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '炽意鳞锋·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「炽意鳞锋」活动颂愿限时获取相应卓越（4星）装扮。',
+                keywords: ['纷竞', '炽心', '竞技', '热血', '运动'],
+                version: '月之六',
+                image: 'images/1b61f0fb31c34adb797e5f8d972232903546889200863460.png'
+            },
+            {
+                id: 105,
+                name: '青金之剑',
+                nameAlt: '青金之剑 / 青金之剑',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '「王国」最为卓越，如宝石般闪亮的剑士，斩断魔兽爪牙的锋刃，向来以冷静谨慎却锐不可当的姿态踏上战场。',
+                descLabel女: '「王国」最为卓越，如宝石般闪亮的剑士，斩断魔兽爪牙的锋刃，向来以冷静谨慎却锐不可当的姿态踏上战场。',
+                descLabel男: '「王国」最为卓越，如宝石般闪亮的剑士，斩断魔兽爪牙的锋刃，向来以冷静谨慎却锐不可当的姿态踏上战场。',
+                price: '通行证获取',
+                isFree: false,
+                obtain: '鳞锋纪游·诸界史诗',
+                obtainDetail: '活动期间，旅行者可以通过解锁「诸界纪游」或「诸界史诗」获得相应卓越（4星）装扮。',
+                keywords: ['青金', '剑', '剑士', '王国', '卓越'],
+                version: '月之六',
+                image: 'images/141a5825530233519925dd6d735d24e03546889200863460.png',
+                image2: 'images/72434bc7db31a40a1a27dcd38784891a3546889200863460.png'
+            },
+            {
+                id: 106,
+                name: '坏坏法师',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '念叨着迷惑咒语的邪恶角色，适合在各种场合扮演经典反派…',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应卓越（4星）装扮。',
+                keywords: ['法师', '邪恶', '反派', '咒语'],
+                version: '月之六',
+                image: 'images/7ee0bc5ca91bfe44b67e28bae14991583546889200863460.png'
+            },
+            {
+                id: 107,
+                name: '寻溯时念',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '逆着时针分针与秒针，追溯古典文明在世界留下的刻痕，研读它们为后人留下的启示…',
+                price: '活动自选',
+                isFree: true,
+                obtain: '绮衣珍赏·清晖',
+                obtainDetail: '活动期间，旅行者可通过完成「绮衣珍赏·清晖」活动，逐步解锁自选相应卓越（4星）装扮一套。',
+                keywords: ['寻溯', '时念', '古典', '文明', '追溯'],
+                version: '月之六',
+                image: 'images/ecf1d58dc4c6226b74b96514d02c13b33546889200863460.png'
+            },
+            {
+                id: 108,
+                name: '甜酸莓果',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '面包为人扫除饥饿与寒冷，蛋糕则能带来安逸与欢快。技法卓越，并懂得将成本控制在宜人区间的甜点师，有时会被整个街区甚至城市奉为瑰宝。',
+                price: '常驻颂愿',
+                isFree: false,
+                obtain: '奇遇回声·常驻颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「奇遇回声」常驻颂愿获得相应卓越（4星）装扮。',
+                keywords: ['甜酸', '莓果', '甜点', '面包', '蛋糕'],
+                version: '月之六',
+                image: 'images/56653452761ab5a2b61fb49dd4e2cc9b3546889200863460.png'
+            },
+            // ★★★ 优异
+            {
+                id: 110,
+                name: '刚正斗志',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '线条挺拔的运动服，兼顾锻炼和工作时的耐用性。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应优异（3星）装扮。',
+                keywords: ['刚正', '斗志', '运动服', '锻炼'],
+                version: '月之六',
+                image: 'images/003f59e9f03aeb42ae07e5ffc36686183546889200863460.png'
+            },
+            {
+                id: 111,
+                name: '冰凉嗷嗷 / 燥热嗷嗷',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '以多本童话中的「飞龙」为原型的玩偶服，头部设计结合了猫猫和仓鼠等动物的特征。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应优异（3星）装扮。',
+                keywords: ['冰凉', '嗷嗷', '燥热', '飞龙', '玩偶服'],
+                version: '月之六',
+                image: 'images/5422722d6a3a172bbfab56af6be46ede3546889200863460.png'
+            },
+            // ===== 月之五 (Month 5) =====
+            {
+                id: 201,
+                name: '云涯荣辉',
+                nameAlt: '云涯荣辉 / 云涯荣辉',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '卫城的人们采撷云光与薄雾，裁剪织造为华丽的衣裳，为胜利者彰显尊荣。又将不朽的金属精心锤锻，雕刻成羽翼形的金冠，致以敬意与颂歌…',
+                descLabel女: '卫城的人们采撷云光与薄雾，裁剪织造为华丽的衣裳，为胜利者彰显尊荣。又将不朽的金属精心锤锻，雕刻成羽翼形的金冠，致以敬意与颂歌…',
+                descLabel男: '卫城的人们采撷云光与薄雾，裁剪织造为华丽的衣裳，为胜利者彰显尊荣。又将不朽的金属精心锤锻，雕刻成羽翼形的金冠，致以敬意与颂歌…',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '云光流岚·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「云光流岚」活动颂愿限时获取相应传说（5星）装扮。',
+                keywords: ['云涯', '荣辉', '卫城', '云光', '薄雾', '羽翼', '金冠', '胜利'],
+                version: '月之五',
+                image: 'images/5e1f63c2b721bdab5c25705558565c093546889200863460.jpg',
+                image2: 'images/6b997ffe4a39be8158371ee9f8a1be343546889200863460.jpg'
+            },
+            {
+                id: 212,
+                name: '云涯荣辉·炎霞',
+                nameAlt: '云涯荣辉·炎霞 / 云涯荣辉·炎霞',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '升炼后的云涯荣辉套装。炎霞，于云雾中升起的火焰，是神圣竞技的仲裁与见证者，挑战者的领袖，英勇青春的赐予者。伟大的卫冕者将身披红色长袍，手握银弓，化作炎霞的代言，以注视与守护，宣布竞技的开始与结束…',
+                descLabel女: '升炼后的云涯荣辉套装。炎霞，于云雾中升起的火焰，是神圣竞技的仲裁与见证者，挑战者的领袖，英勇青春的赐予者。伟大的卫冕者将身披红色长袍，手握银弓，化作炎霞的代言，以注视与守护，宣布竞技的开始与结束…',
+                descLabel男: '升炼后的云涯荣辉套装。炎霞，于云雾中升起的火焰，是神圣竞技的仲裁与见证者，挑战者的领袖，英勇青春的赐予者。伟大的卫冕者将身披红色长袍，手握银弓，化作炎霞的代言，以注视与守护，宣布竞技的开始与结束…',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '云光流岚·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「云光流岚」活动颂愿限时获取相应传说（5星）装扮。',
+                keywords: ['云涯', '荣辉', '炎霞', '升炼', '火焰', '竞技', '卫冕', '红袍', '银弓'],
+                version: '月之五',
+                image: 'images/5cefe0560eee64c924a0d47ee67f49ae3546889200863460.jpg',
+                image2: 'images/0504a9f2b34c7c0de307d96e0489ecb73546889200863460.jpg'
+            },
+            // ---- 卓越 (4★) ----
+            {
+                id: 202,
+                name: '滴答呱呱',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '跳跃的噗噗声是欢快的舞步，淅沥的雨滴轻奏着鼓点。在漫步于小雨中的同时，倾洒生机与活力吧！',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '云光流岚·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「云光流岚」活动颂愿限时获取相应卓越（4星）装扮。',
+                keywords: ['滴答', '呱呱', '雨滴', '舞步', '生机'],
+                version: '月之五',
+                image: 'images/7d6e1c420bd8075bee96d4323976fa883546889200863460.png'
+            },
+            {
+                id: 203,
+                name: '神谟远算',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '将肃穆的色泽、严整的设计与高远寓意的花纹完美融合，宛如风雪中的松柏。无论陷入怎样的困局，智者总能从容应对，找到破局之道。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '云光流岚·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「云光流岚」活动颂愿限时获取相应卓越（4星）装扮。',
+                keywords: ['神谟', '远算', '智者', '谋略', '松柏', '风雪', '破局'],
+                version: '月之五',
+                image: 'images/ecfd86c913dc8b18f0290a24069b297b3546889200863460.png'
+            },
+            {
+                id: 204,
+                name: '热血满垒',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '舒适大方的运动服饰，专为少年少女们的青春热血而生。穿上它，于赛场上尽情挥洒汗水，让你的击球强音响彻全世界，点燃喝彩！',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '云光流岚·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「云光流岚」活动颂愿限时获取相应卓越（4星）装扮。',
+                keywords: ['热血', '满垒', '运动', '棒球', '青春', '赛场'],
+                version: '月之五',
+                image: 'images/a8344cddb65e31122dc9c3f41400d3d73546889200863460.png'
+            },
+            {
+                id: 205,
+                name: '漫游星表',
+                nameAlt: '漫游星表 / 漫游星表',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '无垠的天穹深处，无数的智慧潜藏于斯，亟待人们的发掘。穿上这套装束，沿着星表指引的轨迹，漫游于神秘的宇宙之中。',
+                descLabel女: '无垠的天穹深处，无数的智慧潜藏于斯，亟待人们的发掘。穿上这套装束，沿着星表指引的轨迹，漫游于神秘的宇宙之中。',
+                descLabel男: '无垠的天穹深处，无数的智慧潜藏于斯，亟待人们的发掘。穿上这套装束，沿着星表指引的轨迹，漫游于神秘的宇宙之中。',
+                price: '通行证获取',
+                isFree: false,
+                obtain: '诸界纪游·诸界史诗',
+                obtainDetail: '活动期间，旅行者可以通过解锁「诸界纪游」或「诸界史诗」获得相应卓越（4星）装扮。',
+                keywords: ['漫游', '星表', '星际', '探索', '天穹', '宇宙', '智慧'],
+                version: '月之五',
+                image: 'images/edfee91e4fa4aa925b3c16573cb215f63546889200863460.jpg',
+                image2: 'images/2e635749b7052fb2534584a805cbc4543546889200863460.jpg'
+            },
+            {
+                id: 206,
+                name: '诙谐剧演',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '人来人往，熙熙攘攘，在这繁忙的世界里，欢笑是最为稀缺的礼物。穿上华丽吸睛的装扮，演绎幽默荒诞的动作，让笑容浮现在每个人脸上吧！',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应卓越（4星）装扮。',
+                keywords: ['诙谐', '剧演', '舞台', '戏剧', '欢笑', '幽默'],
+                version: '月之五',
+                image: 'images/8129e0fe5ff196eb14da318a1204aa433546889200863460.png'
+            },
+            {
+                id: 207,
+                name: '迅灵鸮使',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '无惧艰难险阻，跨越霜寒风露，信使的身姿宛若轻灵的小鸮，穿梭于街头巷尾，将人心紧密联系，将信息无声传递。',
+                price: '活动自选',
+                isFree: true,
+                obtain: '绮衣珍赏·曙风',
+                obtainDetail: '活动期间旅行者可通过完成「绮衣珍赏·曙风」逐步解锁自选相应卓越（4星）装扮一套。该装扮将在月之五版本结束后限时上架千星商城。',
+                keywords: ['迅灵', '鸮', '猫头鹰', '信使', '霜寒', '传递'],
+                version: '月之五',
+                image: 'images/0a12b26b2d47f323cb390c2d801407293546889200863460.png'
+            },
+            {
+                id: 208,
+                name: '幻彩氤氲',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '衣装上的色彩如梦般跳跃，宛若街头艺术家们心中那个充满希望的崭新未来。即使这片未来如蒸汽般氤氲难触，他们的追寻也依旧坚定不移。',
+                price: '常驻颂愿',
+                isFree: false,
+                obtain: '奇遇回声·常驻颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「奇遇回声」常驻颂愿获得相应卓越（4星）装扮。',
+                keywords: ['幻彩', '氤氲', '彩虹', '梦幻', '未来', '街头', '艺术家'],
+                version: '月之五',
+                image: 'images/bdaf4ec87a7a5ebd3d60d880727293323546889200863460.png'
+            },
+            // ---- 优异 (3★) ----
+            {
+                id: 211,
+                name: '胜利金果',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '将象征着一切美好的金色苹果标志佩戴在胸前，愿胜利之神的青睐和你一路相伴。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应优异（3星）装扮。',
+                keywords: ['胜利', '金果', '金色', '苹果', '胜利之神'],
+                version: '月之五',
+                image: 'images/59fe8ce7c74a99b2f71659aa0126691a3546889200863460.png'
+            },
+            // ===== 月之四 (Month 4) =====
+            {
+                id: 301,
+                name: '晨曦朝露',
+                nameAlt: '晨曦朝露 / 晨曦朝露',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '一元复始，岁律更新。新年的钟声渐近，愿你恰如升起的朝阳，充满活力与希望。',
+                descLabel女: '一元复始，岁律更新。新年的钟声渐近，愿你恰如升起的朝阳，充满活力与希望。',
+                descLabel男: '一元复始，岁律更新。新年的钟声渐近，愿你恰如升起的朝阳，充满活力与希望。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '祥应吉星·活动颂愿',
+                obtainDetail: '通过「祥应吉星」活动颂愿限时获取相应传说（5星）装扮',
+                keywords: ['晨曦', '朝露', '朝阳', '新年', '希望', '岁律更新'],
+                version: '月之四',
+                image: 'images/931bac958ddca786621f7bedef1b608b3546889200863460.jpg',
+                image2: 'images/96abc6997a308088a84130650cf1c0dd3546889200863460.jpg'
+            },
+            {
+                id: 310,
+                name: '晨曦朝露·玄墨',
+                nameAlt: '晨曦朝露·玄墨 / 晨曦朝露·玄墨',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '升炼后的晨曦朝露套装。深邃的色泽沉稳肃穆，仿若奔涌的玄水，蕴藏着悠远而神圣的古老力量。新春将至，愿福泽如长河般绵绵不息，源远流长。',
+                descLabel女: '升炼后的晨曦朝露套装。深邃的色泽沉稳肃穆，仿若奔涌的玄水，蕴藏着悠远而神圣的古老力量。新春将至，愿福泽如长河般绵绵不息，源远流长。',
+                descLabel男: '升炼后的晨曦朝露套装。深邃的色泽沉稳肃穆，仿若奔涌的玄水，蕴藏着悠远而神圣的古老力量。新春将至，愿福泽如长河般绵绵不息，源远流长。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '祥应吉星·活动颂愿',
+                obtainDetail: '通过「祥应吉星」活动颂愿限时获取相应传说（5星）装扮',
+                keywords: ['晨曦朝露', '玄墨', '升炼', '深邃', '玄水', '福泽', '新年'],
+                version: '月之四',
+                image: 'images/33440b3950ab619b0a803762616c2baf3546889200863460.jpg',
+                image2: 'images/2df23a5f405c878633187ab64d94f4163546889200863460.jpg'
+            },
+            {
+                id: 302,
+                name: '安眠暖夜',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '它以温和的色彩与亲肤的面料，为你打造温暖的倚靠，让每一个夜都充满宁静与安眠。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '祥应吉星·活动颂愿',
+                obtainDetail: '通过「祥应吉星」活动颂愿限时获取相应卓越（4星）装扮',
+                keywords: ['安眠', '暖夜', '温暖', '倚靠', '宁静'],
+                version: '月之四',
+                image: 'images/0c1e4709719e36e621286a6ce8acf2ba3546889200863460.png'
+            },
+            {
+                id: 303,
+                name: '焦甜麦香',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '炉火跳动，麦香芬芳，两者交织成丰穰的乐章，充满治愈与饱足的力量。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '祥应吉星·活动颂愿',
+                obtainDetail: '通过「祥应吉星」活动颂愿限时获取相应卓越（4星）装扮',
+                keywords: ['焦甜', '麦香', '炉火', '芬芳', '丰穰', '治愈'],
+                version: '月之四',
+                image: 'images/8dd8f536b7623c3849a82bd4a12bfec93546889200863460.png'
+            },
+            {
+                id: 304,
+                name: '沧浪利刃',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '沧浪水色，浩瀚波涛。侠客手中利刃如奔流不息的江河，誓要将世间一切的罪恶与污秽涤荡。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '祥应吉星·活动颂愿',
+                obtainDetail: '通过「祥应吉星」活动颂愿限时获取相应卓越（4星）装扮',
+                keywords: ['沧浪', '利刃', '水色', '波涛', '侠客', '涤荡'],
+                version: '月之四',
+                image: 'images/53bdc1c68a229cd04a4dd179cb1b442d3546889200863460.png'
+            },
+            {
+                id: 305,
+                name: '赤丹流云',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '发梢宛如火烧云般热烈，衣衫的云纹充满动感活力，两者交织，共同演奏潮流的华丽鼓点。\n\n————————\n\n据说，每当紫黑色的「噩运」褪去时，第66号世界的天空总会顷刻间从阴霾变为黎明破晓的绚烂景象。丹霞赤红与舒展云姿，也因此被视为这片土地上的吉祥象征，并被广泛用于装饰衣物。\n\n因担忧居民对外来者可能怀有敌意，「欧科塔维亚」遵循这方传统，设计了包含这些吉祥元素的服饰——「赤丹流云」，以期更好地融入当地风土人情。然而，她的服饰因与当地文化的细微差异意外暴露了身份。所幸，她的顾虑未成现实，当地居民以友善的态度接纳了她。\n\n为纪念这一段经历，「赤丹流云」因而也被她当做前往第66号世界的纪念品之一，并保存了下来。',
+                price: '通行证获取',
+                isFree: false,
+                obtain: '诸界纪游·诸界史诗',
+                obtainDetail: '活动期间，旅行者可以通过解锁「诸界纪游」或「诸界史诗」获得相应卓越（4星）装扮',
+                keywords: ['赤丹', '流云', '丹霞', '火烧云', '吉祥', '华丽', '第66号世界'],
+                version: '月之四',
+                image: 'images/0be9ecec108cded1c94da59dd3f270d23546889200863460.jpg'
+            },
+            {
+                id: 306,
+                name: '典雅风姿',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '谨慎而低调的履职风范、友善得体的待人姿态、以及从容自信的应对能力——侍者的时尚正是这份游刃有余的风度。',
+                price: '活动自选',
+                isFree: true,
+                obtain: '绮衣珍赏·深宵',
+                obtainDetail: '活动期间旅行者可通过完成「绮衣珍赏·深宵」逐步解锁自选相应卓越（4星）装扮一套',
+                keywords: ['典雅', '侍者', '风姿', '活动', '免费', '职业'],
+                version: '月之四',
+                image: 'images/5fe85c6ba06a31680504479e9097dbc13546889200863460.png'
+            },
+            {
+                id: 311,
+                name: '翩旋舞步',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '以蔷薇的纹饰抒写心意，以合拍的舞步诉说衷肠。但愿节日的盛会永不停歇，但愿美好的时光永远停驻。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['翩旋', '舞步', '蔷薇', '节日', '盛会'],
+                version: '月之四',
+                image: 'images/c6559854da21b5e4b074ffb3dbe768e73546889200863460.png'
+            },
+            {
+                id: 312,
+                name: '遨游远志',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '纵然生来便无羽翼，但人类始终未曾放弃对飞行的憧憬。心向自由，并乘风而去吧，那片无垠的天空终将成为你的领域。',
+                price: '常驻颂愿',
+                isFree: false,
+                obtain: '奇遇回声·常驻颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「奇遇回声」常驻颂愿获得相应卓越（4星）装扮',
+                keywords: ['遨游', '远志', '飞行', '自由', '天空', '羽翼'],
+                version: '月之四',
+                image: 'images/61ab973de0889530d7d336bb129e73f53546889200863460.png'
+            },
+            {
+                id: 307,
+                name: '自由银星',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '青年人的未来如同深邃的夜空，广阔而自由，尽情化身为银星，自由地在夜空中闪烁光芒吧！',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应优异（3星）装扮',
+                keywords: ['自由', '银星', '夜空', '青年', '闪亮', '未来'],
+                version: '月之四',
+                image: 'images/5bd65bb0f5347abbdd9bb60fd2149b913546889200863460.png'
+            },
+            {
+                id: 308,
+                name: '甜紫瓜瓜',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '以色泽鲜艳的果实为设计灵感，衣物质地细腻柔和，造型圆润饱满。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应优异（3星）装扮',
+                keywords: ['甜', '紫', '瓜果', '圆润', '柔和'],
+                version: '月之四',
+                image: 'images/a21e3e42c26ed8d8fb256a0cc759c88b3546889200863460.png'
+            },
+            {
+                id: 309,
+                name: '豪运奔腾·妙运奔腾',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '化身奔腾的骏马，尽情奔跑摇摆，将一切霉运与烦恼通通抛诸脑后吧！',
+                price: '免费',
+                isFree: true,
+                obtain: '游戏邮件领取',
+                obtainDetail: '版本更新后通过游戏邮件领取套装礼箱-「奔腾」，开启后可自选解锁「豪运奔腾」或「妙运奔腾」装扮一套',
+                keywords: ['奔腾', '骏马', '免费', '祝福', '豪运', '妙运'],
+                version: '月之四',
+                image: 'images/3f4d1d1006922a3f26fe2ae36c2b36f33546889200863460.png'
+            },
+            // ===== 月之三 (Month 3) =====
+            {
+                id: 401,
+                name: '霜庭雪翎',
+                nameAlt: '霜庭雪翎 / 霜庭雪翎',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '身披纯白羽翼，以呼啸不止的寒风，为沉静与高贵加冕。于这冰雪的盛会中尽情起舞吧，让整个凛冬为你伴奏！',
+                descLabel女: '身披纯白羽翼，以呼啸不止的寒风，为沉静与高贵加冕。于这冰雪的盛会中尽情起舞吧，让整个凛冬为你伴奏！',
+                descLabel男: '身披纯白羽翼，以呼啸不止的寒风，为沉静与高贵加冕。于这冰雪的盛会中尽情起舞吧，让整个凛冬为你伴奏！',
+                modalDesc: '身披纯白羽翼，以呼啸不止的寒风，为沉静与高贵加冕。于这冰雪的盛会中尽情起舞吧，让整个凛冬为你伴奏！\n\n————————\n\n在冰雪封冻的第273个世界，度过漫长极夜的过程中，「欧科塔维亚」也有过疏于准备，略显狼狈的时刻——行星抵达轨道的最远端后，局部地区的温度再降三成，便可临近粒子动能的最低点，纵使她的大衣能够抵挡枪炮与铁水，也很难挺过这重考验。彼时，一座古典静雅的庄园出现在她的前路之上，两位年轻的庄园主人盛情招待了她，并邀她参加一场从容的舞会。原来，此地被视为整个文明战胜恶劣环境的里程碑，严冬是他们最大的对手之一，但也见证了他们彻底在恒星系统的每颗星辰上站稳脚跟。为此，人们会在最为寒冷的「雪夜」举办古雅的庆典，两位庄园主人的装束也因此被「欧科塔维亚」铭记，纳入见闻中的珍贵一页。',
+                modalDescLabel女: '身披纯白羽翼，以呼啸不止的寒风，为沉静与高贵加冕。于这冰雪的盛会中尽情起舞吧，让整个凛冬为你伴奏！\n\n————————\n\n在冰雪封冻的第273个世界，度过漫长极夜的过程中，「欧科塔维亚」也有过疏于准备，略显狼狈的时刻——行星抵达轨道的最远端后，局部地区的温度再降三成，便可临近粒子动能的最低点，纵使她的大衣能够抵挡枪炮与铁水，也很难挺过这重考验。彼时，一座古典静雅的庄园出现在她的前路之上，两位年轻的庄园主人盛情招待了她，并邀她参加一场从容的舞会。原来，此地被视为整个文明战胜恶劣环境的里程碑，严冬是他们最大的对手之一，但也见证了他们彻底在恒星系统的每颗星辰上站稳脚跟。为此，人们会在最为寒冷的「雪夜」举办古雅的庆典，两位庄园主人的装束也因此被「欧科塔维亚」铭记，纳入见闻中的珍贵一页。',
+                modalDescLabel男: '身披纯白羽翼，以呼啸不止的寒风，为沉静与高贵加冕。于这冰雪的盛会中尽情起舞吧，让整个凛冬为你伴奏！\n\n————————\n\n在冰雪封冻的第273个世界，度过漫长极夜的过程中，「欧科塔维亚」也有过疏于准备，略显狼狈的时刻——行星抵达轨道的最远端后，局部地区的温度再降三成，便可临近粒子动能的最低点，纵使她的大衣能够抵挡枪炮与铁水，也很难挺过这重考验。彼时，一座古典静雅的庄园出现在她的前路之上，两位年轻的庄园主人盛情招待了她，并邀她参加一场从容的舞会。原来，此地被视为整个文明战胜恶劣环境的里程碑，严冬是他们最大的对手之一，但也见证了他们彻底在恒星系统的每颗星辰上站稳脚跟。为此，人们会在最为寒冷的「雪夜」举办古雅的庆典，两位庄园主人的装束也因此被「欧科塔维亚」铭记，纳入见闻中的珍贵一页。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '雪阵霜庭·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「雪阵霜庭」活动颂愿限时获取相应传说（5星）装扮。另有升炼版本「霜庭雪翎·暗云诗篇」。',
+                keywords: ['霜庭', '雪翎', '暗云诗篇', '雪原', '精灵', '凛冬'],
+                version: '月之三',
+                image: 'images/avawa7qoes429cst6i6qz3pak62i7wh.jpg',
+                image2: 'images/tsbqbqhzvjamn03oae99bunawl4u4vy.jpg'
+            },
+            {
+                id: 523,
+                name: '霜庭雪翎·暗云诗篇',
+                nameAlt: '霜庭雪翎·暗云诗篇 / 霜庭雪翎·暗云诗篇',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '升炼后的霜庭雪翎套装。夜幕的色彩幽寂而神秘，是属于深沉智者的舞台。迎着冰风起舞吧，为雪夜留下一道属于你的色彩！',
+                descLabel女: '升炼后的霜庭雪翎套装。夜幕的色彩幽寂而神秘，是属于深沉智者的舞台。迎着冰风起舞吧，为雪夜留下一道属于你的色彩！',
+                descLabel男: '升炼后的霜庭雪翎套装。夜幕的色彩幽寂而神秘，是属于深沉智者的舞台。迎着冰风起舞吧，为雪夜留下一道属于你的色彩！',
+                modalDesc: '★ 传说装扮 | 霜庭雪翎·暗云诗篇\n\n升炼后的霜庭雪翎套装。夜幕的色彩幽寂而神秘，是属于深沉智者的舞台。迎着冰风起舞吧，为雪夜留下一道属于你的色彩！\n\n————————\n\n在「欧科塔维亚」所著的《第八百世界旅行谈》中，有这样一段记载：\n\n「那场雪夜庆典之后，我又在那座庄园中停留了数个恒星周期。庄园两位主人似乎对星辰的运行规律了如指掌，他们在极夜的最后时段，铺设了一场以『暗云』为题的私人展出——无数层叠的黑色纱幔与银丝刺绣交相辉映，恰如夜幕中浮动的云霭。\n\n据说这套被他们命名为『暗云诗篇』的礼服，是为纪念文明在那颗星球上最为艰难的一段岁月：当极夜降临，连恒星的光芒都被遮蔽之时，人们唯有凭借彼此的联结与信念，才能挨过那段不见天日的时光。\n\n暗云的色彩正是他们对那段岁月最深沉的敬意。」',
+                modalDescLabel女: '★ 传说装扮 | 霜庭雪翎·暗云诗篇\n\n升炼后的霜庭雪翎套装。夜幕的色彩幽寂而神秘，是属于深沉智者的舞台。迎着冰风起舞吧，为雪夜留下一道属于你的色彩！\n\n————————\n\n在「欧科塔维亚」所著的《第八百世界旅行谈》中，有这样一段记载：\n\n「那场雪夜庆典之后，我又在那座庄园中停留了数个恒星周期。庄园两位主人似乎对星辰的运行规律了如指掌，他们在极夜的最后时段，铺设了一场以『暗云』为题的私人展出——无数层叠的黑色纱幔与银丝刺绣交相辉映，恰如夜幕中浮动的云霭。\n\n据说这套被他们命名为『暗云诗篇』的礼服，是为纪念文明在那颗星球上最为艰难的一段岁月：当极夜降临，连恒星的光芒都被遮蔽之时，人们唯有凭借彼此的联结与信念，才能挨过那段不见天日的时光。\n\n暗云的色彩正是他们对那段岁月最深沉的敬意。」',
+                modalDescLabel男: '★ 传说装扮 | 霜庭雪翎·暗云诗篇\n\n升炼后的霜庭雪翎套装。夜幕的色彩幽寂而神秘，是属于深沉智者的舞台。迎着冰风起舞吧，为雪夜留下一道属于你的色彩！\n\n————————\n\n在「欧科塔维亚」所著的《第八百世界旅行谈》中，有这样一段记载：\n\n「那场雪夜庆典之后，我又在那座庄园中停留了数个恒星周期。庄园两位主人似乎对星辰的运行规律了如指掌，他们在极夜的最后时段，铺设了一场以『暗云』为题的私人展出——无数层叠的黑色纱幔与银丝刺绣交相辉映，恰如夜幕中浮动的云霭。\n\n据说这套被他们命名为『暗云诗篇』的礼服，是为纪念文明在那颗星球上最为艰难的一段岁月：当极夜降临，连恒星的光芒都被遮蔽之时，人们唯有凭借彼此的联结与信念，才能挨过那段不见天日的时光。\n\n暗云的色彩正是他们对那段岁月最深沉的敬意。」',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '雪阵霜庭·活动颂愿',
+                obtainDetail: '通过「雪阵霜庭」活动颂愿限时获取，需先拥有基础款「霜庭雪翎」后方可进行升炼。',
+                keywords: ['霜庭', '雪翎', '暗云诗篇', '夜幕', '升炼', '极夜'],
+                version: '月之三',
+                image: 'images/qz5x20j50mhy0at0d4skt0fr8peqls9.jpg',
+                image2: 'images/kzc64liyc27cv1kbc7434o7w78q9wbr.jpg'
+            },
+            {
+                id: 402,
+                name: '疗愈心意',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '身侧点缀的鲜红刻度，正是医者的象征——如注射器刻度般精确履职，誓以仁心守护每一份生命的健康。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '雪阵霜庭·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「雪阵霜庭」活动颂愿限时获取相应卓越（4星）装扮',
+                keywords: ['疗愈', '心意', '医者', '仁心'],
+                version: '月之三',
+                image: 'images/1d52c79efabc20dee67d4302831942093546889200863460.jpg'
+            },
+            {
+                id: 403,
+                name: '荒远山裔',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '抛开所有烦恼，唤醒心中的野性，回应荒野的呼唤吧。让战纹融入你的肌肤，让巨角成为你的指引，奔腾在原始的力量之中！',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '雪阵霜庭·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「雪阵霜庭」活动颂愿限时获取相应卓越（4星）装扮',
+                keywords: ['荒远', '山裔', '荒野', '战纹'],
+                version: '月之三',
+                image: 'images/177c1c1a20cb4f8d6f1307eb7fced4173546889200863460.jpg'
+            },
+            {
+                id: 404,
+                name: '暖冬欢歌',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '说到冬日的节日，总少不了温暖的炉火、美味的盛宴、精美的礼物，以及最重要的——团聚的欢歌！',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '雪阵霜庭·活动颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「雪阵霜庭」活动颂愿限时获取相应卓越（4星）装扮',
+                keywords: ['暖冬', '欢歌', '冬日', '团聚'],
+                version: '月之三',
+                image: 'images/b2b88640b56d6a01da26dc977be96d943546889200863460.jpg'
+            },
+            {
+                id: 405,
+                name: '新春序曲',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '节日的钟声已悄然响起，新春步履正渐渐靠近。穿上它，愿这份温暖与你同在，愿好运始终与你相伴。',
+                price: '通行证获取',
+                isFree: false,
+                obtain: '诸界纪游·诸界史诗',
+                obtainDetail: '活动期间，旅行者可以通过解锁「诸界纪游」或「诸界史诗」获得相应卓越（4星）装扮',
+                keywords: ['新春', '序曲', '春节', '喜庆'],
+                version: '月之三',
+                image: 'images/9469112dcc6837219d8186f0ce08239a3546889200863460.jpg'
+            },
+            {
+                id: 520,
+                name: '明曜旋律',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '如璀璨宝石般华丽耀眼。穿上它，汇聚灯光与视线，顺着绝妙的旋律，演绎动人的舞步，让所有人都凝神注视吧！',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['明曜', '旋律', '宝石', '华丽', '舞蹈'],
+                version: '月之三',
+                image: 'images/1fd26fd86ddcace06d82115b9b6a948d3546889200863460.jpg'
+            },
+            {
+                id: 521,
+                name: '雪阵霜庭',
+                nameAlt: '雪阵霜庭 / 雪阵霜庭',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '锐速皑影 不畏地形与天气的桎梏，尽情穿行于寒冷冻风之间，在巍峨山巅追求最完美的弧线，正是冰雪世界中的最新潮流！\n\n————————\n\n纵观「欧科塔维亚」造访的诸多世界中，第273个「冰雪之星」能排入较为特别的行列之中——它位于恒星系统的边缘，接受的光照不足，大地常年被冰雪封冻，但人们对生活的热情并未因此降温！ 此地最为流行的运动便是极限滑雪，顶级赛事中，赛手甚至会从坡度已达垂直的四分之三，高度冲破云层的山尖冲刺而下，达到飞鸟都难以追上的疾速，留下皑白的影迹… 为了安然体验这项运动的乐趣，有必要做好万全的防护，「欧科塔维亚」便购入了这套外观年轻，实则性能卓越的滑雪服，尝试了一次突破别地声速的俯冲…',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可以通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['雪阵', '霜庭', '滑雪', '冰雪', '皑影'],
+                version: '月之三',
+                image: 'images/6ddb0c57aceabc60f884fbb037d86bf13546889200863460.jpg',
+                image2: 'images/8dd8dac8703f87e8a2430a8f60fcdaf83546889200863460.jpg'
+            },
+            {
+                id: 522,
+                name: '橙叶苍藤',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '以枫叶为装饰的秋季服饰，既提供了舒适的穿着体验，又散发沉静优雅的气质，让你在金色秋日中尽享收获的美好。',
+                price: '常驻颂愿',
+                isFree: false,
+                obtain: '奇遇回声·常驻颂愿',
+                obtainDetail: '活动期间，旅行者可以通过「奇遇回声」常驻颂愿获得相应卓越（4星）装扮',
+                keywords: ['橙叶', '苍藤', '枫叶', '秋季', '收获'],
+                version: '月之三',
+                image: 'images/662e15c3e926e05506b4dd91055993da3546889200863460.jpg'
+            },
+            {
+                id: 406,
+                name: '绵绵雪球',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '在大雪纷飞的冬日里，外表冰冷却内心温暖的绵绵雪球是孩子们最好的冬日玩伴。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '通过千星商城「奇域秘藏·雪阵霜庭」获取，月之三~月之五期间',
+                keywords: ['绵绵', '雪球', '可爱', '呆萌', '冬日'],
+                version: '月之三',
+                image: 'images/8f23e2b22d068205fd21a162f49203a63546889200863460.jpg'
+            },
+            {
+                id: 407,
+                name: '坚岩勇气',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '它的设计灵感源自工匠保护服，搭配可爱的小龙图案点缀，是一款兼顾功能性与活力的日常工装。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应优异（3星）装扮',
+                keywords: ['坚岩', '勇气', '工匠', '小龙', '工装'],
+                version: '月之三',
+                image: 'images/0c3187e50c64413561cc89e3a9497d6b3546889200863460.jpg'
+            },
+            // ===== 月之二 (Month 2) =====
+            {
+                id: 501,
+                name: '烛影狂欢夜',
+                nameAlt: '烛影狂欢夜 / 烛影狂欢夜',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '月华洒落，烛影摇曳，狂欢夜的帷幕已经拉开。准备好了吗？尽情捣蛋玩闹的机会来咯！',
+                descLabel女: '月华洒落，烛影摇曳，狂欢夜的帷幕已经拉开。准备好了吗？尽情捣蛋玩闹的机会来咯！',
+                descLabel男: '月华洒落，烛影摇曳，狂欢夜的帷幕已经拉开。准备好了吗？尽情捣蛋玩闹的机会来咯！',
+                modalDesc: '月华洒落，烛影摇曳，狂欢夜的帷幕已经拉开。准备好了吗？尽情捣蛋玩闹的机会来咯！\n\n————————\n\n天赋异禀，热情好客的两位高阶魔法教授，是「欧科塔维亚」造访第777个世界之初结识的朋友。\n\n在学校授课时，他们善于从晦涩难懂的知识中提炼要点，而在日常生活，尤其后世称为烛影狂欢夜的庆典上，他们则像无忧无虑的少年少女，加入学生们有趣但适度的恶作剧，甚至带头向其他老师讨要糖果，其中就包括身着「蔷薇叹息」的后辈…\n\n「欧科塔维亚」离去之前，他们为这位客人亲手设计了一身礼服，礼服中凝聚着真诚的祝福…',
+                modalDescLabel女: '月华洒落，烛影摇曳，狂欢夜的帷幕已经拉开。准备好了吗？尽情捣蛋玩闹的机会来咯！\n\n————————\n\n天赋异禀，热情好客的两位高阶魔法教授，是「欧科塔维亚」造访第777个世界之初结识的朋友。\n\n在学校授课时，他们善于从晦涩难懂的知识中提炼要点，而在日常生活，尤其后世称为烛影狂欢夜的庆典上，他们则像无忧无虑的少年少女，加入学生们有趣但适度的恶作剧，甚至带头向其他老师讨要糖果，其中就包括身着「蔷薇叹息」的后辈…\n\n「欧科塔维亚」离去之前，他们为这位客人亲手设计了一身礼服，礼服中凝聚着真诚的祝福…',
+                modalDescLabel男: '月华洒落，烛影摇曳，狂欢夜的帷幕已经拉开。准备好了吗？尽情捣蛋玩闹的机会来咯！\n\n————————\n\n天赋异禀，热情好客的两位高阶魔法教授，是「欧科塔维亚」造访第777个世界之初结识的朋友。\n\n在学校授课时，他们善于从晦涩难懂的知识中提炼要点，而在日常生活，尤其后世称为烛影狂欢夜的庆典上，他们则像无忧无虑的少年少女，加入学生们有趣但适度的恶作剧，甚至带头向其他老师讨要糖果，其中就包括身着「蔷薇叹息」的后辈…\n\n「欧科塔维亚」离去之前，他们为这位客人亲手设计了一身礼服，礼服中凝聚着真诚的祝福…',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '幻夜游烛·活动颂愿',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['烛影', '狂欢夜', '派对', '神秘'],
+                version: '月之二',
+                image: 'images/46f0e3f9e694c5d965d46ccbbc98c5db3546889200863460.png',
+                image2: 'images/ef8191710985ffda01b10968859d6e4e3546889200863460.png'
+            },
+            {
+                id: 513,
+                name: '烛影狂欢夜 · 南瓜糖',
+                nameAlt: '烛影狂欢夜 · 南瓜糖 / 烛影狂欢夜 · 南瓜糖',
+                rarity: 'legendary',
+                rarityLabel: '传说',
+                stars: 5,
+                desc: '升炼后的烛影狂欢夜套装。远处的南瓜灯已经亮起，快快戴上巫师帽出发，和伙伴们一起踏入一场充满古老秘闻的暗夜盛宴，共度狂欢夜吧！',
+                descLabel女: '升炼后的烛影狂欢夜套装。远处的南瓜灯已经亮起，快快戴上巫师帽出发，和伙伴们一起踏入一场充满古老秘闻的暗夜盛宴，共度狂欢夜吧！',
+                descLabel男: '升炼后的烛影狂欢夜套装。远处的南瓜灯已经亮起，快快戴上巫师帽出发，和伙伴们一起踏入一场充满古老秘闻的暗夜盛宴，共度狂欢夜吧！',
+                modalDesc: '★ 传说装扮 | 烛影狂欢夜 · 南瓜糖\n\n升炼后的烛影狂欢夜套装。远处的南瓜灯已经亮起，快快戴上巫师帽出发，和伙伴们一起踏入一场充满古老秘闻的暗夜盛宴，共度狂欢夜吧！\n\n————————\n\n在「欧科塔维亚」所著的《第八百世界旅行谈》中，有这样一段记载：\n\n「……宴会的热度在子夜时分达到顶峰，此时主人便会熄灭所有正式照明，只留摇曳烛光。客人们在这个特别环节中会进行一项古老传统——向在场最德高望重者讨要一块糖果。\n\n有趣的是，承担这项『分配糖果』职责的，并非预设中那些板着脸的老学究，而是两位看似严厉、实则最乐于参与学生恶作剧的魔法教授。\n\n他们的名字，按这个世界的语言音译，大致相当于『甜涩糖浆』——这大概与他们在历届庆典中亲手烘焙的点心有关。据说每一届的配方都不尽相同，但都以『先苦后甜』作为调味的核心思路……」',
+                modalDescLabel女: '★ 传说装扮 | 烛影狂欢夜 · 南瓜糖\n\n升炼后的烛影狂欢夜套装。远处的南瓜灯已经亮起，快快戴上巫师帽出发，和伙伴们一起踏入一场充满古老秘闻的暗夜盛宴，共度狂欢夜吧！\n\n————————\n\n在「欧科塔维亚」所著的《第八百世界旅行谈》中，有这样一段记载：\n\n「……宴会的热度在子夜时分达到顶峰，此时主人便会熄灭所有正式照明，只留摇曳烛光。客人们在这个特别环节中会进行一项古老传统——向在场最德高望重者讨要一块糖果。\n\n有趣的是，承担这项『分配糖果』职责的，并非预设中那些板着脸的老学究，而是两位看似严厉、实则最乐于参与学生恶作剧的魔法教授。\n\n他们的名字，按这个世界的语言音译，大致相当于『甜涩糖浆』——这大概与他们在历届庆典中亲手烘焙的点心有关。据说每一届的配方都不尽相同，但都以『先苦后甜』作为调味的核心思路……」',
+                modalDescLabel男: '★ 传说装扮 | 烛影狂欢夜 · 南瓜糖\n\n升炼后的烛影狂欢夜套装。远处的南瓜灯已经亮起，快快戴上巫师帽出发，和伙伴们一起踏入一场充满古老秘闻的暗夜盛宴，共度狂欢夜吧！\n\n————————\n\n在「欧科塔维亚」所著的《第八百世界旅行谈》中，有这样一段记载：\n\n「……宴会的热度在子夜时分达到顶峰，此时主人便会熄灭所有正式照明，只留摇曳烛光。客人们在这个特别环节中会进行一项古老传统——向在场最德高望重者讨要一块糖果。\n\n有趣的是，承担这项『分配糖果』职责的，并非预设中那些板着脸的老学究，而是两位看似严厉、实则最乐于参与学生恶作剧的魔法教授。\n\n他们的名字，按这个世界的语言音译，大致相当于『甜涩糖浆』——这大概与他们在历届庆典中亲手烘焙的点心有关。据说每一届的配方都不尽相同，但都以『先苦后甜』作为调味的核心思路……」',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '幻夜游烛·活动颂愿',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['烛影', '狂欢夜', '南瓜糖', '巫师帽', '暗夜'],
+                version: '月之二',
+                image: 'images/ceabff1620a3d354c8ecd6b5fba6ce7a3546889200863460.png',
+                image2: 'images/a94e6dddb610c4ba845ff22a7171ce9a3546889200863460.png'
+            },
+            {
+                id: 514,
+                name: '诡夜',
+                nameAlt: '诡夜 / 诡夜',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '当夜幕降临，月光轻抚大地，听从古老神秘呼唤，成为神秘庆典的主宰。身着「诡夜」套装服饰的年轻法师，将在节日之夜点燃最为关键的一盏灯，宣读正式但不显枯燥的开场词，揭开庆典的序幕。',
+                descLabel女: '当夜幕降临，月光轻抚大地，听从古老神秘呼唤，成为神秘庆典的主宰。身着「诡夜」套装服饰的年轻法师，将在节日之夜点燃最为关键的一盏灯，宣读正式但不显枯燥的开场词，揭开庆典的序幕。',
+                descLabel男: '当夜幕降临，月光轻抚大地，听从古老神秘呼唤，成为神秘庆典的主宰。身着「诡夜」套装服饰的年轻法师，将在节日之夜点燃最为关键的一盏灯，宣读正式但不显枯燥的开场词，揭开庆典的序幕。',
+                price: '千星商城',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['诡夜', '神秘', '庆典', '月光', '法师'],
+                version: '月之二',
+                image: 'images/3735060972d8accbb335251072c523b33546889200863460.png',
+                image2: 'images/59abdaa9ea7443dec350ef0513ebacac3546889200863460.png'
+            },
+            {
+                id: 502,
+                name: '幻音废墟',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '将甜美的细节与硬核的元素巧妙融合，如同废墟中悄然绽放的星光。在阳光未能照耀的地下舞台，奏响直击灵魂的最强音符。',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '幻夜游烛·活动颂愿',
+                obtainDetail: '活动期间，旅行者可通过「幻夜游烛」活动颂愿限时获取相应卓越（4星）装扮',
+                keywords: ['幻音', '废墟', '地下', '舞台', '音符'],
+                version: '月之二',
+                image: 'images/6ae8cd236b4adaf43adfd6ad289d0f963546889200863460.png'
+            },
+            {
+                id: 503,
+                name: '狂热斗士',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '轻便灵巧与重点防护正是拳手之衣的必备特质，在斗士的无畏的意志之下，橙与蓝碰撞的火花，将成为重创对手的醒目标志！',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '幻夜游烛·活动颂愿',
+                obtainDetail: '活动期间，旅行者可通过「幻夜游烛」活动颂愿限时获取相应卓越（4星）装扮',
+                keywords: ['狂热', '斗士', '拳击', '橙蓝', '战斗'],
+                version: '月之二',
+                image: 'images/e82e0d2d38c936efcd9fdf2bcd4ec8fa3546889200863460.png'
+            },
+            {
+                id: 504,
+                name: '幽秘森域',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '森林子民在晨雾中起舞，以包容之心与和平的原则为准绳，引导探寻者逐步发掘深藏多年的秘密…',
+                price: '活动颂愿',
+                isFree: false,
+                obtain: '幻夜游烛·活动颂愿',
+                obtainDetail: '活动期间，旅行者可通过「幻夜游烛」活动颂愿限时获取相应卓越（4星）装扮',
+                keywords: ['幽秘', '森域', '森林', '晨雾', '和平'],
+                version: '月之二',
+                image: 'images/82ba611d8f3f220198d5f1c772604b993546889200863460.png'
+            },
+            {
+                id: 505,
+                name: '蔷薇叹息',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '黑荆棘与红蔷薇的歌谣，巫师与魔女们的低语，皆是钻研世界之谜的重要伴奏…',
+                price: '通行证获取',
+                isFree: false,
+                obtain: '诸界纪游·诸界史诗',
+                obtainDetail: '活动期间，旅行者可通过解锁「诸界纪游」或「诸界史诗」获得相应卓越（4星）装扮',
+                keywords: ['蔷薇', '叹息', '黑荆棘', '巫师', '魔女'],
+                version: '月之二',
+                image: 'images/fcd22014d6b03b62c0af5de6b075132d3546889200863460.png'
+            },
+            {
+                id: 506,
+                name: '怪杰猫猫',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '突破虚拟世界中的桎梏，以侠盗精神来去纵横，将宝贵的资源送回弱势群体的手中！此等苦劳的回报是甜度封顶的「桃红汽水」/「冰蓝软糖」！',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['怪杰', '猫猫', '猫咪', '可爱', '桃红', '冰蓝'],
+                version: '月之二',
+                image: 'images/fccaa8d5fbc2faaa1c2d383c338d33223546889200863460.png'
+            },
+            {
+                id: 507,
+                name: '蒸汽时代',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '锅炉燃烧，满溢的蒸汽驱动机件飞转。在这个时代，工程师们也是时尚聚会上最亮眼的淑女与绅士。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['蒸汽', '时代', '朋克', '工业'],
+                version: '月之二',
+                image: 'images/d0119b695c8ef187b0ae3d7dc02fd6293546889200863460.png'
+            },
+            {
+                id: 508,
+                name: '花间绯影',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '绯红如血，灰暗如夜。穿上它，你将化身为那抹月光下拂过花间的轻烟，行动无声，却又带着不容置疑的力量。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['花间', '绯影', '花朵', '精灵'],
+                version: '月之二',
+                image: 'images/1f0524690473f61691d2653046c69c743546889200863460.png'
+            },
+            {
+                id: 509,
+                name: '晴空绘卷',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '少年少女们对未来的畅想，如同晴空般辽阔。穿上它，便会想起那些值得珍藏的记忆绘卷，以及被认真书写的青春梦想。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['晴空', '绘卷', '青春', '未来'],
+                version: '月之二',
+                image: 'images/c6577f60b8c96200d84de2cefdcd884a3546889200863460.png'
+            },
+            {
+                id: 510,
+                name: '仙境舞会',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '童话中的舞会即将开幕，响应兔子先生的盛邀，带上小玩伴，在仙境中尽情遨游吧！',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['仙境', '舞会', '童话', '兔子'],
+                version: '月之二',
+                image: 'images/92bf0d0486fc06e2aa470bc2c48e88883546889200863460.png'
+            },
+            {
+                id: 511,
+                name: '极彩巧匠',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '唯有尝试成百上千种颜料，将它们大胆混合，才能找出极致的色彩搭配，衣装上沾染的颜料便是见证创意的勋章。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['极彩', '巧匠', '颜料', '创意'],
+                version: '月之二',
+                image: 'images/6c9bc4dfc1e2199dbc9849a3735b92d73546889200863460.png'
+            },
+            {
+                id: 512,
+                name: '橙炽热情',
+                rarity: 'outstanding',
+                rarityLabel: '卓越',
+                stars: 4,
+                desc: '潮流活力与青春热情如橙色火焰般相融，运动的节奏卡准强劲音乐的节拍，猛虎般势不可挡。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应卓越（4星）装扮',
+                keywords: ['橙炽', '热情', '活力', '运动'],
+                version: '月之二',
+                image: 'images/442582e0e504631d7f2e45817aad399a3546889200863460.png'
+            },
+            {
+                id: 515,
+                name: '巡游',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '当节日庆典的钟声敲响，穿上这身盛装，你便是游行队伍中最耀眼的主角。提灯引路，南瓜为伴，尽情享受这个欢呼雀跃的夜晚吧。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应优异（3星）装扮',
+                keywords: ['巡游', '庆典', '南瓜', '提灯'],
+                version: '月之二',
+                image: 'images/bbd4b3cf6d45935083e02a7cd997539e3546889200863460.png'
+            },
+            {
+                id: 516,
+                name: '金果',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '以夏日果实为灵感设计，既提供了坚实的防护，又散发出难以抵挡的热情，让你在这场夏日冒险中游刃有余。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应优异（3星）装扮',
+                keywords: ['金果', '夏日', '果实', '热情'],
+                version: '月之二',
+                image: 'images/250c560f4f7a8a9de4a6cbe1cdb4450d3546889200863460.png'
+            },
+            {
+                id: 517,
+                name: '晴雨噗噗',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '告别雨天的阴郁，将沉闷化为欢歌。雨声将为你伴奏，水花将为你起舞，尽情地在雨中漫游吧。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应优异（3星）装扮',
+                keywords: ['晴雨', '噗噗', '雨天', '水花'],
+                version: '月之二',
+                image: 'images/e3c6018fc1e14b3da66eff59125405c83546889200863460.png'
+            },
+            {
+                id: 518,
+                name: '街头律动',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '为那些渴望自由的舞者而生。每一次的即兴舞动，都是你不羁灵魂的回响。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应优异（3星）装扮',
+                keywords: ['街头', '律动', '舞蹈', '自由'],
+                version: '月之二',
+                image: 'images/c9493293611da67faa7f94ff7950eea83546889200863460.png'
+            },
+            {
+                id: 519,
+                name: '绒绒狸猫·黄绿',
+                rarity: 'superior',
+                rarityLabel: '优异',
+                stars: 3,
+                desc: '卸下烦恼，拥抱这份极致的柔软和温暖吧！所到之处，你将融化冰冷，让人们的脸上绽放最纯粹的笑容。',
+                price: '事象凝核',
+                isFree: false,
+                obtain: '千星商城·奇域秘藏',
+                obtainDetail: '活动期间，旅行者可通过千星商城限时获取相应优异（3星）装扮',
+                keywords: ['绒绒', '狸猫', '柔软', '可爱'],
+                version: '月之二',
+                image: 'images/db044512e17e88ee27befbe06dd029fe3546889200863460.png'
+            }
+        ];
+
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const rarityFilter = document.getElementById('rarityFilter');
+        const priceFilter = document.getElementById('priceFilter');
+        const outfitGrid = document.getElementById('outfitGrid');
+        const totalCount = document.getElementById('totalCount');
+        const freeCount = document.getElementById('freeCount');
+        const passCount = document.getElementById('passCount');
+        const selfpickCount = document.getElementById('selfpickCount');
+        const paidCount = document.getElementById('paidCount');
+
+        // Render Cards
+        function renderOutfits(data) {
+            outfitGrid.innerHTML = '';
+
+            if (data.length === 0) {
+                outfitGrid.innerHTML = `
+                    <div class="no-results">
+                        <h3>未找到匹配结果</h3>
+                        <p>请尝试其他关键词或筛选条件</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const versionOrder = ['月之七', '月之六', '月之五', '月之四', '月之三', '月之二'];
+            
+            versionOrder.forEach(version => {
+                const versionOutfits = data.filter(o => o.version === version);
+                if (versionOutfits.length === 0) return;
+
+                // Version header
+                const header = document.createElement('div');
+                header.className = 'group-header';
+                header.style.cssText = 'display: flex; align-items: center; gap: 15px; margin: 30px 0 20px; padding: 12px 20px; background: linear-gradient(90deg, rgba(233,69,96,0.15) 0%, transparent 100%); border-left: 4px solid #e94560; border-radius: 0 10px 10px 0;';
+                header.innerHTML = `
+                    <h2 class="group-title" style="font-size: 1.5em; font-weight: bold; background: linear-gradient(135deg, #f4d03f 0%, #fff 50%, #f4d03f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0;">✧ ${version}</h2>
+                    <span class="group-count" style="font-size: 0.85em; color: #95a5a6; background: rgba(255,255,255,0.05); padding: 3px 10px; border-radius: 15px;">${versionOutfits.length} 套</span>
+                `;
+                outfitGrid.appendChild(header);
+
+                // Version row with cards
+                const row = document.createElement('div');
+                row.className = 'version-row';
+                
+                versionOutfits.forEach((outfit, index) => {
+                    // 有nameAlt的表示有男女款，拆成两个卡片
+                    if (outfit.nameAlt) {
+                        const names = outfit.nameAlt.split(' / ');
+                        const card1 = createOutfitCard(outfit, index, outfit.image, names[0], '女');
+                        row.appendChild(card1);
+                        if (outfit.image2) {
+                            const card2 = createOutfitCard(outfit, index + 0.5, outfit.image2, names[1], '男');
+                            row.appendChild(card2);
+                        }
+                    } else {
+                        const card = createOutfitCard(outfit, index);
+                        row.appendChild(card);
+                    }
+                });
+                
+                outfitGrid.appendChild(row);
+            });
+        }
+
+        function createOutfitCard(outfit, index, image, name, label) {
+            const displayImage = image || outfit.image;
+            // label存在时表示男女卡片，name已经是完整名称（从nameAlt拆分而来），不要再追加label
+            const displayName = name || outfit.name;
+            
+            // 根据label选择对应的描述
+            let displayDesc = outfit.desc;
+            if (label === '女' && outfit.descLabel女) {
+                displayDesc = outfit.descLabel女;
+            } else if (label === '男' && outfit.descLabel男) {
+                displayDesc = outfit.descLabel男;
+            }
+            
+            const card = document.createElement('div');
+            card.className = 'outfit-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+
+            const rarityClass = `rarity-${outfit.rarity}`;
+            const priceDisplay = outfit.isFree ?
+                `<span class="price free">${outfit.price}</span>` :
+                `<span class="price">${outfit.price}</span>`;
+
+            const imageContent = displayImage ?
+                `<img src="${displayImage}" alt="${displayName}" loading="lazy">` :
+                '<span style="font-size: 3em; color: rgba(244,208,63,0.3);">✧</span>';
+
+            card.innerHTML = `
+                <div class="card-image">
+                    ${imageContent}
+                    <span class="version-badge">${outfit.version}</span>
+                    <span class="rarity-badge ${rarityClass}">${outfit.rarityLabel}</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">${displayName}</h3>
+                    <div class="card-rarity ${rarityClass}">
+                        <span class="stars">${'★'.repeat(outfit.stars)}</span>
+                    </div>
+                    <p class="card-desc">${displayDesc}</p>
+                    <div class="card-footer">
+                        ${priceDisplay}
+                        <span class="obtain-method">${outfit.obtain}</span>
+                    </div>
+                </div>
+            `;
+
+            card.addEventListener('click', () => openModal(outfit, displayImage, label));
+            return card;
+        }
+
+        // Filter Logic
+        let currentVersion = '月之七';
+
+        function filterOutfits() {
+            const keyword = searchInput.value.toLowerCase().trim();
+            const rarityValue = rarityFilter.value;
+            const priceValue = priceFilter.value;
+
+            const filtered = outfits.filter(outfit => {
+                const hasKeyword = !!keyword;
+                const versionMatch = hasKeyword || currentVersion === 'all' || outfit.version === currentVersion;
+
+                const keywordMatch = !keyword ||
+                    outfit.name.toLowerCase().includes(keyword) ||
+                    outfit.nameAlt?.toLowerCase().includes(keyword) ||
+                    outfit.desc.toLowerCase().includes(keyword) ||
+                    outfit.obtain.toLowerCase().includes(keyword) ||
+                    outfit.keywords.some(k => k.toLowerCase().includes(keyword));
+
+                const rarityMatch = rarityValue === 'all' || outfit.rarity === rarityValue;
+
+                const priceMatch = priceValue === 'all' ||
+                    (priceValue === 'free' && outfit.price === '免费' && outfit.isFree) ||
+                    (priceValue === 'pass' && outfit.price === '通行证获取') ||
+                    (priceValue === 'selfpick' && outfit.price === '活动自选') ||
+                    (priceValue === 'paid' && outfit.price === '事象凝核');
+
+                return versionMatch && keywordMatch && rarityMatch && priceMatch;
+            });
+
+            renderOutfits(filtered);
+            updateStats(filtered);
+        }
+
+        // Update Stats
+        function updateStats(data) {
+            totalCount.textContent = data.length;
+            freeCount.textContent = data.filter(o => o.price === '免费').length;
+            passCount.textContent = data.filter(o => o.price === '通行证获取').length;
+            selfpickCount.textContent = data.filter(o => o.price === '活动自选').length;
+            paidCount.textContent = data.filter(o => o.price === '事象凝核').length;
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', filterOutfits);
+        rarityFilter.addEventListener('change', filterOutfits);
+        priceFilter.addEventListener('change', filterOutfits);
+
+        // Version Tab Click
+        const versionTabs = document.getElementById('versionTabs');
+        versionTabs.addEventListener('click', (e) => {
+            const tab = e.target.closest('.version-tab');
+            if (!tab) return;
+            currentVersion = tab.dataset.version;
+            document.querySelectorAll('.version-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            filterOutfits();
+        });
+
+        // Initial Render - only 月之七
+        filterOutfits();
+
+        // Modal Functions
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        let currentOutfitId = null;
+        let pendingCommentImages = [];
+
+        // 初始化评论区事件
+        document.getElementById('commentImageInput').addEventListener('change', handleCommentImageUpload);
+        document.getElementById('commentSubmitBtn').addEventListener('click', submitComment);
+
+        function handleCommentImageUpload(e) {
+            const files = Array.from(e.target.files);
+            const previewContainer = document.getElementById('commentPreviewImages');
+            const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+
+            files.forEach(file => {
+                if (file.size > MAX_SIZE) {
+                    alert(`图片 "${file.name}" 大小超过2MB限制，请选择更小的图片`);
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const dataUrl = ev.target.result;
+                    pendingCommentImages.push(dataUrl);
+                    const div = document.createElement('div');
+                    div.className = 'comment-preview-item';
+                    div.dataset.index = pendingCommentImages.length - 1;
+                    div.innerHTML = `<img src="${dataUrl}" alt="preview"><span class="remove-btn" onclick="removeCommentPreview(this)">✕</span>`;
+                    previewContainer.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+            e.target.value = '';
+        }
+
+        window.removeCommentPreview = function(btn) {
+            const item = btn.parentElement;
+            const index = parseInt(item.dataset.index);
+            pendingCommentImages.splice(index, 1);
+            item.remove();
+            // 重新编号
+            document.querySelectorAll('.comment-preview-item').forEach((el, i) => {
+                el.dataset.index = i;
+            });
+        };
+
+        function submitComment() {
+            const input = document.getElementById('commentInput');
+            const text = input.value.trim();
+            if (!text && pendingCommentImages.length === 0) return;
+
+            const comments = JSON.parse(localStorage.getItem('stellar_comments') || '{}');
+            const outfitComments = comments[currentOutfitId] || [];
+
+            const comment = {
+                id: Date.now(),
+                text: text,
+                images: [...pendingCommentImages],
+                time: new Date().toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }),
+                avatar: ['✦', '✧', '★', '☆', '◆', '◇'][Math.floor(Math.random() * 6)],
+                nickname: localStorage.getItem('stellar_username') || `旅行者${Math.floor(Math.random() * 9000) + 1000}`
+            };
+
+            outfitComments.unshift(comment);
+            comments[currentOutfitId] = outfitComments;
+            localStorage.setItem('stellar_comments', JSON.stringify(comments));
+
+            input.value = '';
+            pendingCommentImages = [];
+            document.getElementById('commentPreviewImages').innerHTML = '';
+
+            renderCommentList(outfitComments);
+        }
+
+        function renderCommentList(comments) {
+            const list = document.getElementById('commentList');
+            if (!comments || comments.length === 0) {
+                list.innerHTML = '<div class="comment-empty">暂无评论，来抢沙发吧~</div>';
+                return;
+            }
+            list.innerHTML = comments.map((c, idx) => `
+                <div class="comment-item">
+                    <div class="comment-user">
+                        <div class="comment-avatar">${c.avatar}</div>
+                        <span class="comment-nickname">${c.nickname}</span>
+                        <span class="comment-time">${c.time}</span>
+                        <button class="comment-delete-btn" onclick="deleteComment(${c.id})" title="删除评论">✕</button>
+                    </div>
+                    ${c.text ? `<div class="comment-text">${escapeHtml(c.text)}</div>` : ''}
+                    ${c.images && c.images.length > 0 ? `<div class="comment-images">${c.images.map(img => `<img src="${img}" alt="评论图片" onclick="openCommentImage(this.src)">`).join('')}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        window.openCommentImage = function(src) {
+            openFullSizeImage(src, '评论图片');
+        };
+
+        window.deleteComment = function(id) {
+            const comments = JSON.parse(localStorage.getItem('stellar_comments') || '{}');
+            const outfitComments = comments[currentOutfitId] || [];
+            const filtered = outfitComments.filter(c => c.id !== id);
+            comments[currentOutfitId] = filtered;
+            localStorage.setItem('stellar_comments', JSON.stringify(comments));
+            renderCommentList(filtered);
+        };
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function openModal(outfit, clickedImage, label) {
+            currentOutfitId = outfit.id;
+            const rarityClass = `rarity-${outfit.rarity}`;
+
+            document.getElementById('modalRarityBadge').textContent = outfit.rarityLabel;
+            document.getElementById('modalRarityBadge').className = `modal-rarity-badge ${rarityClass}`;
+            document.getElementById('modalVersionBadge').textContent = outfit.version;
+            document.getElementById('modalTitle').textContent = outfit.name;
+            document.getElementById('modalStars').textContent = '★'.repeat(outfit.stars);
+
+            // 根据label选择对应的描述
+            let modalDesc = outfit.modalDesc || outfit.desc;
+            if (label === '女' && outfit.modalDescLabel女) {
+                modalDesc = outfit.modalDescLabel女;
+            } else if (label === '男' && outfit.modalDescLabel男) {
+                modalDesc = outfit.modalDescLabel男;
+            }
+            document.getElementById('modalDesc').textContent = modalDesc;
+            document.getElementById('modalObtainDetail').textContent = outfit.obtainDetail;
+
+            const priceEl = document.getElementById('modalPrice');
+            priceEl.textContent = outfit.price;
+            priceEl.className = outfit.isFree ? 'modal-price-value free' : 'modal-price-value';
+
+            document.getElementById('modalObtainMethod').innerHTML = '';
+
+            // 设置背景图片
+            const modalImg = document.getElementById('modalImg');
+            const modalPlaceholder = document.getElementById('modalPlaceholder');
+            const modalZoomHint = document.getElementById('modalZoomHint');
+
+            const displayImage = clickedImage || outfit.image;
+            if (displayImage) {
+                modalImg.src = displayImage;
+                modalImg.alt = outfit.name;
+                modalImg.style.display = 'block';
+                modalPlaceholder.style.display = 'none';
+                modalZoomHint.style.display = 'block';
+            } else {
+                modalImg.style.display = 'none';
+                modalPlaceholder.style.display = 'block';
+                modalZoomHint.style.display = 'none';
+            }
+
+            // 重置评论区
+            document.getElementById('commentInput').value = '';
+            pendingCommentImages = [];
+            document.getElementById('commentPreviewImages').innerHTML = '';
+
+            // 加载评论
+            const comments = JSON.parse(localStorage.getItem('stellar_comments') || '{}');
+            const outfitComments = comments[currentOutfitId] || [];
+            renderCommentList(outfitComments);
+
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Full size image viewer
+        function openFullSizeImage(imageSrc, outfitName) {
+            const fullOverlay = document.createElement('div');
+            fullOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: zoom-out;';
+            fullOverlay.innerHTML = `
+                <img src="${imageSrc}" alt="${outfitName}" style="max-width: 95%; max-height: 90%; object-fit: contain;">
+                <div style="position: absolute; top: 20px; right: 20px; color: white; font-size: 2em; cursor: pointer;" onclick="this.parentElement.remove()">✕</div>
+                <div style="position: absolute; bottom: 20px; color: rgba(255,255,255,0.7); font-size: 1em;">${outfitName}</div>
+            `;
+            fullOverlay.addEventListener('click', (e) => {
+                if (e.target === fullOverlay) fullOverlay.remove();
+            });
+            document.body.appendChild(fullOverlay);
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // 注册弹窗逻辑
+        const welcomeOverlay = document.getElementById('welcomeOverlay');
+        const welcomeInput = document.getElementById('welcomeInput');
+        const welcomeBtn = document.getElementById('welcomeBtn');
+        const welcomeError = document.getElementById('welcomeError');
+
+        function isValidName(name) {
+            // 至少2个中文 或者 至少1个英文单词（不含空格）
+            const cn = name.match(/^[\u4e00-\u9fa5]{2,}$/);
+            const en = name.match(/^[a-zA-Z]+\s?[a-zA-Z]*$/);
+            return cn || en;
+        }
+
+        function submitWelcome() {
+            const name = welcomeInput.value.trim();
+            if (!isValidName(name)) {
+                welcomeError.textContent = '名字无效：至少2个中文或1个英文单词';
+                return;
+            }
+            localStorage.setItem('stellar_username', name);
+            welcomeOverlay.style.display = 'none';
+            document.getElementById('userIdBadge').textContent = '旅行者 · ' + name;
+        }
+
+        welcomeBtn.addEventListener('click', submitWelcome);
+        welcomeInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') submitWelcome();
+        });
+
+        // 若已注册过，直接隐藏并显示ID
+        if (localStorage.getItem('stellar_username')) {
+            welcomeOverlay.style.display = 'none';
+            document.getElementById('userIdBadge').textContent = '旅行者 · ' + localStorage.getItem('stellar_username');
+        }
+
+        // 打开弹窗时聚焦输入框
+        welcomeInput.focus();
+    </script>
+</body>
+</html>
